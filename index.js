@@ -1,26 +1,27 @@
-const Client = require('ssh2-sftp-client')
+require('dotenv').config();
+const actions = require('./src/controller/controller')
 
-const config = {
-  host: '195.179.238.13',
-  port: '65002', 
-  username: 'u466684088',
-  password: 'D123#$%67q'
-}
-
-const connSftp = async () => {
-  const sftp = new Client()
+async function run() {
   try {
-    await sftp.connect(config)
-    console.log('conexion exitosa',sftp.cwd())
-    const listFiles = await sftp.list('/')
-    console.log(listFiles);
-    sftp.end()
+    const isConnected = await actions.openConn();
+    if (isConnected) {
+      console.log('conectado a amex')
+      const getLeads = await actions.searchLeads();
+        
+        if (getLeads > 1) {
+          console.log('insertar leads')
+        } else {
+          console.log('sin leads operativos para insertar')
+        }
+    }else{
+      console.log('no conectado')
+      //guardar log
+    }
+    
   } catch (error) {
-    console.log(error);
+    console.log(error)
+    // process.exit(1);
   }
-
-  
-  console.log('ddd');
 }
 
-connSftp()
+run()
