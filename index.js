@@ -15,7 +15,7 @@ async function run() {
         }
     }else{
       console.log('no conectado')
-      //guardar log
+      //guardar logs
     }
     
   } catch (error) {
