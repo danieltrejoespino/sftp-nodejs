@@ -10,12 +10,13 @@ async function run() {
         
         if (getLeads > 1) {
           console.log('insertar leads')
+          const read = await actions.readLeads();
         } else {
           console.log('sin leads operativos para insertar')
         }
-    }else{
-      console.log('no conectado')
+    }else{      
       //guardar logs
+      actions.saveLog('sin conexion con serv amex')
     }
     
   } catch (error) {
@@ -23,5 +24,15 @@ async function run() {
     // process.exit(1);
   }
 }
+//?PROCESO PRINCIPAL
+// run()
 
-run()
+async function test() {
+  const log = await actions.saveLog('sin conexion con serv amex')
+  console.log(log);
+  const read = await actions.readLeads();
+  console.log(read);
+  
+}
+
+test()
